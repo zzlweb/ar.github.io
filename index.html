@@ -35,6 +35,14 @@
 		// init scene and camera
 		var scene = new THREE.Scene();
 
+		var ambient=new THREE.AmbientLight(0x666666);
+    scene.add(ambient);
+ 
+    var directctionalLight=new THREE.DirectionalLight(0x887766);
+    directctionalLight.position.set(-1,1,1).normalize();
+    scene.add(directctionalLight);
+
+
 		//////////////////////////////////////////////////////////////////////////////////
 		//		Initialize a basic camera
 		//////////////////////////////////////////////////////////////////////////////////
@@ -157,6 +165,7 @@
 		threeGLTFLoader.load("https://ued.united-imaging.com//doc_server//doc_server//arlib//pattern//123//327f22180ac046ae8d9d4d03028da111.obj", function (object) {
 			arWorldRoot.add(object);
 			object.position.set(0, 0, 0);
+			object.up.set(0,0,0,)
 			console.log(object);
 			object.scale.set(0.04, 0.04, 0.04);
 			}
