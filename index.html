@@ -93,9 +93,9 @@
 			// cameraParametersUrl: THREEx.ArToolkitContext.baseURL + 'camera_para.dat',
 			cameraParametersUrl: 'https://jeromeetienne.github.io/AR.js/data/data/camera_para.dat',
 			detectionMode: 'mono',
-			maxDetectionRate: 30,
-			canvasWidth: 80 * 3,
-			canvasHeight: 60 * 3,
+			// maxDetectionRate: 30,
+			canvasWidth: 80 * 6,
+			canvasHeight: 60 * 6,
 		})
 		// initialize it
 		arToolkitContext.init(function onCompleted() {
@@ -164,7 +164,7 @@
 		var threeGLTFLoader = new THREE.OBJLoader();
 		threeGLTFLoader.load("https://ued.united-imaging.com//doc_server//doc_server//arlib//pattern//123//327f22180ac046ae8d9d4d03028da111.obj", function (object) {
 			arWorldRoot.add(object);
-			// object.position.set(0, 2, -2);
+			object.position.set(0, 0, -2);
 			console.log(object);
 			// object.scale.set(0.01, 0.01, 0.01);
 			}
