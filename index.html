@@ -3,7 +3,7 @@
 <!-- three.js library -->
 <script src='vendor/three.js/build/three.min.js'></script>
 <!-- three.js load GLTF -->
-<script src='vendor/three.js/examples/js/loaders/GLTFLoader.js'></script>
+<script src='vendor/three.js/examples/js/loaders/OBJLoader.js'></script>
 <script src="vendor/three.js/examples/js/libs/stats.min.js"></script>
 <!-- ar.js -->
 <script src="ar.js"></script>
@@ -153,7 +153,7 @@
 		// var mesh	= new THREE.Mesh( geometry, material );
 		// mesh.position.y	= 0.5
 		// arWorldRoot.add( mesh );
-		var threeGLTFLoader = new THREE.GLTFLoader();
+		var threeGLTFLoader = new THREE.OBJLoader();
 		threeGLTFLoader.load("https://ued.united-imaging.com//doc_server//doc_server//arlib//pattern//123//327f22180ac046ae8d9d4d03028da111.obj", function (object) {
 			console.log(obj);
 			arWorldRoot.add(object);
