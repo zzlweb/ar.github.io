@@ -108,13 +108,14 @@
 	////////////////////////////////////////////////////////////////////////////////
 	//          Create a ArMarkerControls
 	////////////////////////////////////////////////////////////////////////////////
-
+	// 二维码的标识文件路径
 	var markerRoot = new THREE.Group
 	scene.add(markerRoot)
 	var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, markerRoot, {
 		type : 'pattern',
 		// patternUrl : THREEx.ArToolkitContext.baseURL + 'patt.hiro'
 		// patternUrl : 'https://jeromeetienne.github.io/AR.js/data/data/patt.hiro'
+		changeMatrixMode: 'cameraTransformMatrix',
 		patternUrl : 'https://ued.united-imaging.com//doc_server//doc_server//arlib//pattern//123//pattern.patt'
 		
 		
@@ -155,9 +156,12 @@
 	// mesh.position.y	= 0.5
 	// arWorldRoot.add( mesh );
 
-	threeGLTFLoader.load("https://ued.united-imaging.com//doc_server//doc_server//arlib//pattern//123//327f22180ac046ae8d9d4d03028da111.obj", function (gltf) {
-
-						arWorldRoot.add( gltf );
+	threeGLTFLoader.load("https://ued.united-imaging.com//doc_server//doc_server//arlib//pattern//123//327f22180ac046ae8d9d4d03028da111.obj", function (object) {
+						object.position.set(0,0,0);
+						object.scale.set(0.001,0.001,0.001);
+						var axes=new THREE.AxisHelper(10);
+						scene.add(axes);
+						arWorldRoot.add( object );
 
         }
     );
