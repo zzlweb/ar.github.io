@@ -18,11 +18,11 @@
 
 		// init renderer
 		var renderer = new THREE.WebGLRenderer({
-			antialias	: true,
+			// antialias	: true,
 			alpha: true
 		});
 		renderer.setClearColor(new THREE.Color('lightgrey'), 0)
-		renderer.setPixelRatio( 1/2 );
+		// renderer.setPixelRatio( 1/2 );
 		renderer.setSize(window.innerWidth, window.innerHeight);
 		renderer.domElement.style.position = 'absolute'
 		renderer.domElement.style.top = '0px'
@@ -36,11 +36,11 @@
 		var scene = new THREE.Scene();
 
 		var ambient=new THREE.AmbientLight(0xfff);
-    scene.add(ambient);
+    // scene.add(ambient);
  
     var directctionalLight=new THREE.DirectionalLight(0xfff);
     directctionalLight.position.set(-5,5,5).normalize();
-    scene.add(directctionalLight);
+    // scene.add(directctionalLight);
 
 
 		//////////////////////////////////////////////////////////////////////////////////
