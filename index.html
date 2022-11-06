@@ -39,7 +39,7 @@
     scene.add(ambient);
  
     var directctionalLight=new THREE.DirectionalLight(0xfff);
-    directctionalLight.position.set(-1,1,1).normalize();
+    directctionalLight.position.set(-5,5,5).normalize();
     scene.add(directctionalLight);
 
 
@@ -167,9 +167,9 @@
 		var threeGLTFLoader = new THREE.OBJLoader();
 		threeGLTFLoader.load("https://ued.united-imaging.com//doc_server//doc_server//arlib//pattern//123//327f22180ac046ae8d9d4d03028da111.obj", function (object) {
 			arWorldRoot.add(object);
-			object.position.set(0, 0, -2);
+			object.position.set(0, 0, 0);
 			console.log(object);
-			object.scale.set(3, 3, 3);
+			object.scale.set(0.01, 0.01, 0.01);
 			object.rotateY(1)
 			}
 		);
