@@ -18,11 +18,11 @@
 
 		// init renderer
 		var renderer = new THREE.WebGLRenderer({
-			// antialias	: true,
+			antialias	: true,
 			alpha: true
 		});
 		renderer.setClearColor(new THREE.Color('lightgrey'), 0)
-		// renderer.setPixelRatio( 1/2 );
+		renderer.setPixelRatio( 1/2 );
 		renderer.setSize(window.innerWidth, window.innerHeight);
 		renderer.domElement.style.position = 'absolute'
 		renderer.domElement.style.top = '0px'
@@ -35,10 +35,10 @@
 		// init scene and camera
 		var scene = new THREE.Scene();
 
-		var ambient=new THREE.AmbientLight(0x666666);
+		var ambient=new THREE.AmbientLight(0xfff);
     scene.add(ambient);
  
-    var directctionalLight=new THREE.DirectionalLight(0x887766);
+    var directctionalLight=new THREE.DirectionalLight(0xfff);
     directctionalLight.position.set(-1,1,1).normalize();
     scene.add(directctionalLight);
 
@@ -94,8 +94,8 @@
 			cameraParametersUrl: 'https://jeromeetienne.github.io/AR.js/data/data/camera_para.dat',
 			detectionMode: 'mono',
 			// maxDetectionRate: 30,
-			canvasWidth: 80 * 6,
-			canvasHeight: 60 * 6,
+			// canvasWidth: 80 * 6,
+			// canvasHeight: 60 * 6,
 		})
 		// initialize it
 		arToolkitContext.init(function onCompleted() {
@@ -108,6 +108,8 @@
 			if (arToolkitSource.ready === false) return
 
 			arToolkitContext.update(arToolkitSource.domElement)
+
+			scene.visible = camera.visible
 		})
 
 
@@ -128,6 +130,7 @@
 			// patternUrl : THREEx.ArToolkitContext.baseURL + 'patt.kanji'
 		})
 
+		scene.visible = false
 		// build a smoothedControls
 		var smoothedRoot = new THREE.Group()
 		scene.add(smoothedRoot)
@@ -167,7 +170,6 @@
 			object.position.set(0, 0, -2);
 			console.log(object);
 			object.scale.set(0.1, 0.1, 0.1);
-			object.rotateX(1)
 			object.rotateY(1)
 			}
 		);
@@ -175,9 +177,9 @@
 		console.log(scene);
 
 
-		// onRenderFcts.push(function () {
-		// 	mesh.rotation.x += 0.1
-		// })
+		onRenderFcts.push(function () {
+			arWorldRoot.rotation.x += 0.1
+		})
 
 		//////////////////////////////////////////////////////////////////////////////////
 		//		render the whole thing on the page
