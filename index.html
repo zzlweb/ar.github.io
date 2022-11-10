@@ -81,7 +81,7 @@
 			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
 			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-			console.log(mouse.x , mouse.y);
+			console.log(mouse.x, mouse.y);
 		}
 
 		//////////////////////////////////////////////////////////////////////////////////
@@ -89,7 +89,7 @@
 		//////////////////////////////////////////////////////////////////////////////////
 
 		// Create a camera
-		var camera = new THREE.PerspectiveCamera(45,window.innerWidth/window.innerHeight,1,5000);
+		var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 5000);
 
 		scene.add(camera);
 
@@ -334,6 +334,29 @@
 				mixer.update(clock.getDelta());
 			}
 
+			//更新鼠标与相机的射线
+			raycaster.setFromCamera(mouse, camera);
+
+			//获取与射线相交的所有物体
+			var intersects = raycaster.intersectObjects(scene.children);
+
+			console.log(intersects, '-----点击');
+			//判断是否有相交的物体
+			if (intersects.length > 0) {
+				// if (INTERSECTED) {//如果选中的不是相交的第一个对象，如果INTERSECTED不为空，说明之前有选中过对象，先把之前的物体恢复回原来的颜色，再将新的相交到的第一个物体赋给塔
+				// 	INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);//恢复物体原来的颜色
+				// }
+				//不管之前有没有选中的物体，新的射线相交后有相交的物体都把第一个相交的赋给INTERSECTED
+				// INTERSECTED = intersects[0].object;//获取相交的第一个物体
+				// INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();//保存修改之前的颜色，以便后面恢复
+				intersects.forEach((item) => {
+					item.dispose()
+				})
+			} else {
+				// if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
+				// INTERSECTED = null;
+			}
+
 			renderer.render(scene, camera);
 			stats.update();
 		})
@@ -352,28 +375,7 @@
 				onRenderFct(deltaMsec / 1000, nowMsec / 1000)
 			})
 
-			//更新鼠标与相机的射线
-			raycaster.setFromCamera(mouse, camera);
 
-			//获取与射线相交的所有物体
-			var intersects = raycaster.intersectObjects(scene.children);
-
-			console.log(intersects , '-----点击');
-			//判断是否有相交的物体
-			if (intersects.length > 0) {
-				// if (INTERSECTED) {//如果选中的不是相交的第一个对象，如果INTERSECTED不为空，说明之前有选中过对象，先把之前的物体恢复回原来的颜色，再将新的相交到的第一个物体赋给塔
-				// 	INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);//恢复物体原来的颜色
-				// }
-				//不管之前有没有选中的物体，新的射线相交后有相交的物体都把第一个相交的赋给INTERSECTED
-				// INTERSECTED = intersects[0].object;//获取相交的第一个物体
-				// INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();//保存修改之前的颜色，以便后面恢复
-				intersects.forEach((item) => {
-					item.dispose()
-				})
-			} else {
-				// if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
-				// INTERSECTED = null;
-			}
 		})
 
 	</script>
