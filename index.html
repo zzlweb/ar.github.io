@@ -354,6 +354,8 @@
 			raycaster.setFromCamera(mouse, camera);
 			//获取与射线相交的所有物体
 			var intersects = raycaster.intersectObjects(scene.children);
+
+			console.log(intersects , '-----点击');
 			//判断是否有相交的物体
 			if (intersects.length > 0) {
 				// if (INTERSECTED) {//如果选中的不是相交的第一个对象，如果INTERSECTED不为空，说明之前有选中过对象，先把之前的物体恢复回原来的颜色，再将新的相交到的第一个物体赋给塔
