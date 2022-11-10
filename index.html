@@ -74,16 +74,27 @@
 		//创建一个射线向量
 		mouse = new THREE.Vector2();
 		//鼠标移动事件，目的是将鼠标坐标归一化
-		window.addEventListener('mousemove',  (event) => {
+		window.addEventListener('mousemove', (event) => {
 			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
 			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 		});
 
 
 		window.addEventListener('touchmove', (event) => {
-			mouse.x =  (event.clientX / window.innerWidth) * 2 - 1
+			mouse.x = (event.clientX / window.innerWidth) * 2 - 1
 			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
 		})
+
+		arrowHelper = new THREE.ArrowHelper(
+			raycaster.ray.direction,
+			raycaster.ray.origin,
+			15,
+			0xff0000,
+			1,
+			0.5,
+		)
+		scene.add(arrowHelper)
+
 
 		//////////////////////////////////////////////////////////////////////////////////
 		//		Initialize a basic camera
@@ -336,8 +347,8 @@
 			}
 
 			if (mouse.x && mouse.y) {
-					raycaster.setFromCamera({ x: mouse.x, y: mouse.y }, camera)
-				}
+				raycaster.setFromCamera({ x: mouse.x, y: mouse.y }, camera)
+			}
 
 			//更新鼠标与相机的射线
 			raycaster.setFromCamera(mouse, camera);
