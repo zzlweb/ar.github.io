@@ -11,6 +11,7 @@
 <script src="vendor/three.js/GLTFLoader.js"></script>
 <style>
 </style>
+
 <body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
 	<div style='position: absolute; top: 10px; width:100%; text-align: center; z-index: 1;'>
 		<a href="https://github.com/AR-js-org/AR.js/" target="_blank">AR.js</a> - three.js mobile performance
@@ -27,11 +28,13 @@
 		<button onclick="changeAction(12)">wave12</button>
 	</div> -->
 
-	
+
 	<div style="position: absolute;left: 0px; bottom: 0px;width:100%;height: 100px;padding: 10px;">
 	</div>
 	<script>
-		var whoAction=0;
+		var whoAction = 0;
+		// 射线
+		var raycaster, mouse;
 
 		//////////////////////////////////////////////////////////////////////////////////
 		//		Init
@@ -57,13 +60,27 @@
 		// init scene and camera
 		var scene = new THREE.Scene();
 
-		var ambient=new THREE.AmbientLight(0xfff);
-    // scene.add(ambient);
- 
-    var directctionalLight=new THREE.DirectionalLight(0xfff);
-    directctionalLight.position.set(-5,5,5).normalize();
-    // scene.add(directctionalLight);
+		var ambient = new THREE.AmbientLight(0xfff);
+		// scene.add(ambient);
 
+		var directctionalLight = new THREE.DirectionalLight(0xfff);
+		directctionalLight.position.set(-5, 5, 5).normalize();
+		// scene.add(directctionalLight);
+
+		// 创建射线
+		//鼠标拾取
+		//创建一个Raycaster光线投射
+		raycaster = new THREE.Raycaster();
+		//创建一个射线向量
+		mouse = new THREE.Vector2();
+		//鼠标移动事件，目的是将鼠标坐标归一化
+		window.addEventListener('mousemove', onMouseMove, false);
+
+		function onMouseMove(event) {
+			event.preventDefault();
+			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+		}
 
 		//////////////////////////////////////////////////////////////////////////////////
 		//		Initialize a basic camera
@@ -202,20 +219,20 @@
 		var loader = new THREE.GLTFLoader();
 		var myobj = null;
 		// 没有材质文件，系统自动设置Phong网格材质
-		loader.load('https://ued.united-imaging.com//doc_server//doc_server//resource//src//70610664823701a3341a6e3db0af2fa7.glb',function (obj) {
+		loader.load('https://ued.united-imaging.com//doc_server//doc_server//resource//src//70610664823701a3341a6e3db0af2fa7.glb', function (obj) {
 			//设置模型位置
-			obj.scene.position.set(0,-1,1)
-			obj.scene.scale.set(0.4,0.4,0.4);
+			obj.scene.position.set(0, -1, 1)
+			obj.scene.scale.set(0.4, 0.4, 0.4);
 			// 旋转
 			obj.scene.rotation.x = (-90 * Math.PI) / 180;
 			console.log(11);
 			console.log(obj);
-			
+
 			// arWorldRoot.add(obj.scene);
 
 			mixer = new THREE.AnimationMixer(obj.scene);
 			mixer.clipAction(obj.animations[whoAction]).play();
-			myobj=obj;
+			myobj = obj;
 		})
 
 		// add a torus knot
@@ -227,44 +244,44 @@
 			side: THREE.DoubleSide
 		});
 		var mesh1 = new THREE.Mesh(geometry, material);
-		mesh1.position.set(0,0.1,0);
+		mesh1.position.set(0, 0.1, 0);
 		arWorldRoot.add(mesh1);
 		onRenderFcts.push(function () {
 			mesh1.rotation.z += 0.05
 		})
 
 		var mesh2 = new THREE.Mesh(geometry, material);
-		mesh2.position.set(0,0.1,0.6);
+		mesh2.position.set(0, 0.1, 0.6);
 		arWorldRoot.add(mesh2);
 		onRenderFcts.push(function () {
 			mesh2.rotation.z += 0.05
 		})
 
 		var mesh3 = new THREE.Mesh(geometry, material);
-		mesh3.position.set(0,0.1,-0.6);
+		mesh3.position.set(0, 0.1, -0.6);
 		arWorldRoot.add(mesh3);
 		onRenderFcts.push(function () {
 			mesh3.rotation.z += 0.05
 		})
 
 
-		
+
 		var mesh4 = new THREE.Mesh(geometry, material);
-		mesh4.position.set(0.6,0.1,0);
+		mesh4.position.set(0.6, 0.1, 0);
 		arWorldRoot.add(mesh4);
 		onRenderFcts.push(function () {
 			mesh4.rotation.z += 0.05
 		})
 
 		var mesh5 = new THREE.Mesh(geometry, material);
-		mesh5.position.set(0.6,0.1,0.6);
+		mesh5.position.set(0.6, 0.1, 0.6);
 		arWorldRoot.add(mesh5);
 		onRenderFcts.push(function () {
 			mesh5.rotation.z += 0.05
 		})
 
 		var mesh6 = new THREE.Mesh(geometry, material);
-		mesh6.position.set(0.6,0.1,-0.6);
+		mesh6.position.set(0.6, 0.1, -0.6);
 		arWorldRoot.add(mesh6);
 		onRenderFcts.push(function () {
 			mesh6.rotation.z += 0.05
@@ -272,33 +289,34 @@
 
 
 		var mesh7 = new THREE.Mesh(geometry, material);
-		mesh7.position.set(-0.6,0.1,0);
+		mesh7.position.set(-0.6, 0.1, 0);
 		arWorldRoot.add(mesh7);
 		onRenderFcts.push(function () {
 			mesh7.rotation.z += 0.05
 		})
 
 		var mesh8 = new THREE.Mesh(geometry, material);
-		mesh8.position.set(-0.6,0.1,0.6);
+		mesh8.position.set(-0.6, 0.1, 0.6);
 		arWorldRoot.add(mesh8);
 		onRenderFcts.push(function () {
 			mesh8.rotation.z += 0.05
 		})
 
 		var mesh9 = new THREE.Mesh(geometry, material);
-		mesh9.position.set(-0.6,0.1,-0.6);
+		mesh9.position.set(-0.6, 0.1, -0.6);
 		arWorldRoot.add(mesh9);
 		onRenderFcts.push(function () {
 			mesh9.rotation.z += 0.05
 		})
 
 		// 光
-		var ambient=new THREE.AmbientLight(0xffffff);
+		var ambient = new THREE.AmbientLight(0xffffff);
 		scene.add(ambient);
 
-		var directctionalLight=new THREE.DirectionalLight(0xffffff);
-		directctionalLight.position.set(1,1,1).normalize();
+		var directctionalLight = new THREE.DirectionalLight(0xffffff);
+		directctionalLight.position.set(1, 1, 1).normalize();
 		scene.add(directctionalLight);
+
 
 
 		//////////////////////////////////////////////////////////////////////////////////
@@ -309,9 +327,27 @@
 		// render the scene
 		onRenderFcts.push(function () {
 			// 更新动画帧
-			if(mixer){
+			if (mixer) {
 				mixer.update(clock.getDelta());
 			}
+			//更新鼠标与相机的射线
+			raycaster.setFromCamera(mouse, camera);
+			//获取与射线相交的所有物体
+			var intersects = raycaster.intersectObjects(scene.children);
+			//判断是否有相交的物体
+			if (intersects.length > 0) {
+				if (INTERSECTED) {//如果选中的不是相交的第一个对象，如果INTERSECTED不为空，说明之前有选中过对象，先把之前的物体恢复回原来的颜色，再将新的相交到的第一个物体赋给塔
+					INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);//恢复物体原来的颜色
+				}
+				//不管之前有没有选中的物体，新的射线相交后有相交的物体都把第一个相交的赋给INTERSECTED
+				INTERSECTED = intersects[0].object;//获取相交的第一个物体
+				INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();//保存修改之前的颜色，以便后面恢复
+				INTERSECTED.material.emissive.setHex(0xff0000);
+			} else {
+				if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
+				INTERSECTED = null;
+			}
+
 			renderer.render(scene, camera);
 			stats.update();
 		})
