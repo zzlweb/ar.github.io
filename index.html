@@ -337,6 +337,8 @@
 			//更新鼠标与相机的射线
 			raycaster.setFromCamera(mouse, camera);
 
+			console.log(scene.children);
+
 			//获取与射线相交的所有物体
 			var intersects = raycaster.intersectObjects(scene.children);
 
