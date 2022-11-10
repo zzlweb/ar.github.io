@@ -80,6 +80,8 @@
 			event.preventDefault();
 			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
 			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+			console.log(mouse.x , mouse.y);
 		}
 
 		//////////////////////////////////////////////////////////////////////////////////
@@ -352,6 +354,7 @@
 
 			//更新鼠标与相机的射线
 			raycaster.setFromCamera(mouse, camera);
+
 			//获取与射线相交的所有物体
 			var intersects = raycaster.intersectObjects(scene.children);
 
