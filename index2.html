@@ -29,6 +29,11 @@
 
 	
 	<div style="position: absolute;left: 0px; bottom: 0px;width:100%;height: 100px;padding: 10px;">
+		<button onclick="shot()">fire</button>
+		<button onclick="rotateGun(10,'left')">left</button>
+		<button onclick="rotateGun(10,'right')">right</button>
+		<button onclick="rotateGun(10,'up')">up</button>
+		<button onclick="rotateGun(10,'down')">down</button>
 	</div>
 	<script>
 		var whoAction=0;
@@ -292,6 +297,38 @@
 			mesh9.rotation.z += 0.05
 		})
 
+		var mid = 0.7;
+		var geometry2 = new THREE.BoxGeometry(0.1, 0.2, 0.1);
+		var gun = new THREE.Mesh(geometry2, material);
+		gun.position.set(0,0.1+mid,1.2);
+		gun.rotation.x = (10 * Math.PI) / 180;
+		arWorldRoot.add(gun);
+
+
+		function shot(){
+			// tan71.565°等于3。上下最大角度为70
+		    let geometry3 = new THREE.SphereGeometry(0.05);
+			let ball = new THREE.Mesh(geometry3, material);
+			ball.position.set(0,mid,1.2);
+			arWorldRoot.add(ball);
+			let zDis = mid*(Math.tan(gun.rotation.x))
+			let xDis = mid*(Math.tan(gun.rotation.z))
+			console.log(gun.rotation.x);
+			console.log(gun.rotation.z);
+			console.log(zDis);
+			console.log(xDis);
+			onRenderFcts.push(function () {
+				ball.position.y-=mid/10 // 前进
+				ball.position.z-=zDis/10 // 上升
+				ball.position.x+=xDis/10 // 左右
+				if(ball.position.y <=0.15){
+					arWorldRoot.remove(ball);
+				}
+
+			})
+		}
+
+
 		// 光
 		var ambient=new THREE.AmbientLight(0xffffff);
 		scene.add(ambient);
@@ -331,5 +368,25 @@
 			})
 		})
 
+		function changeAction(num){
+			mixer.clipAction(myobj.animations[whoAction]).stop();
+			mixer.clipAction(myobj.animations[num]).play();
+			whoAction=num;
+		}
+		function goback(){
+			myobj.scene.position.y-=1;
+			console.log(myobj.scene);
+		}
+
+		function rotateGun(num,type){
+			switch(type){
+				case 'left':gun.rotation.z-=(num * Math.PI) / 180;break;
+				case 'right':gun.rotation.z+=(num * Math.PI) / 180;break;
+				case 'up':gun.rotation.x+=(num * Math.PI) / 180;break;
+				case 'down':gun.rotation.x-=(num * Math.PI) / 180;break;
+			}
+		}
+
+		
 	</script>
 </body>
