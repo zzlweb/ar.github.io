@@ -74,15 +74,16 @@
 		//创建一个射线向量
 		mouse = new THREE.Vector2();
 		//鼠标移动事件，目的是将鼠标坐标归一化
-		window.addEventListener('mousemove', onMouseMove, false);
-
-		function onMouseMove(event) {
-			event.preventDefault();
+		window.addEventListener('mousemove',  (event) => {
 			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
 			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+		});
 
-			console.log(mouse.x, mouse.y);
-		}
+
+		window.addEventListener('touchmove', (event) => {
+			mouse.x =  (event.clientX / window.innerWidth) * 2 - 1
+			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
+		})
 
 		//////////////////////////////////////////////////////////////////////////////////
 		//		Initialize a basic camera
@@ -334,15 +335,19 @@
 				mixer.update(clock.getDelta());
 			}
 
+			if (mouse.x && mouse.y) {
+					raycaster.setFromCamera({ x: mouse.x, y: mouse.y }, camera)
+				}
+
 			//更新鼠标与相机的射线
 			raycaster.setFromCamera(mouse, camera);
 
-			console.log(scene.children);
+			console.log(raycaster);
 
 			//获取与射线相交的所有物体
 			var intersects = raycaster.intersectObjects(scene.children);
 
-			console.log(intersects, '-----点击');
+			// console.log(intersects, '-----点击');
 			//判断是否有相交的物体
 			if (intersects.length > 0) {
 				// if (INTERSECTED) {//如果选中的不是相交的第一个对象，如果INTERSECTED不为空，说明之前有选中过对象，先把之前的物体恢复回原来的颜色，再将新的相交到的第一个物体赋给塔
