@@ -73,14 +73,7 @@
 		raycaster = new THREE.Raycaster();
 		//创建一个射线向量
 		mouse = new THREE.Vector2();
-		//鼠标移动事件，目的是将鼠标坐标归一化
-		window.addEventListener('mousemove', (event) => {
-			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-		});
-
-
-		window.addEventListener('touchmove', (event) => {
+		window.addEventListener('touchstart', (event) => {
 			mouse.x = (event.clientX / window.innerWidth) * 2 - 1
 			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
 		})
@@ -369,7 +362,9 @@
 				// INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();//保存修改之前的颜色，以便后面恢复
 				intersects.forEach((item) => {
 					item.dispose()
+					alert(item)
 				})
+		
 			} else {
 				// if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
 				// INTERSECTED = null;
